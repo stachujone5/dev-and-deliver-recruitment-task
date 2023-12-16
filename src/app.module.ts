@@ -5,8 +5,11 @@ import { join } from 'path';
 import { PrismaModule } from './prisma/prisma.module';
 import { FilmsModule } from './films/films.module';
 import { SwapiModule } from './swapi/swapi.module';
-import { PlanetsResolver } from './planets/planets.resolver';
 import { PlanetsModule } from './planets/planets.module';
+import { SpeciesModule } from './species/species.module';
+import { VehiclesModule } from './vehicles/vehicles.module';
+import { StarshipsModule } from './starships/starships.module';
+import { CharactersModule } from './characters/characters.module';
 
 @Module({
   imports: [
@@ -17,8 +20,11 @@ import { PlanetsModule } from './planets/planets.module';
     PrismaModule,
     SwapiModule,
     FilmsModule,
-    PlanetsModule
-  ],
-  providers: [PlanetsResolver]
+    PlanetsModule,
+    SpeciesModule,
+    VehiclesModule,
+    StarshipsModule,
+    CharactersModule
+  ]
 })
 export class AppModule {}

@@ -3,11 +3,11 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class PlanetsService {
+export class CharactersService {
   constructor(private prisma: PrismaService) {}
 
   async findAll(skip = 0, take = 10, name?: string) {
-    const where: Prisma.PlanetWhereInput = {};
+    const where: Prisma.CharacterWhereInput = {};
 
     if (name) {
       where.name = {
@@ -16,7 +16,7 @@ export class PlanetsService {
       };
     }
 
-    return this.prisma.planet.findMany({
+    return this.prisma.character.findMany({
       where,
       skip,
       take
@@ -24,7 +24,7 @@ export class PlanetsService {
   }
 
   async findOne(id: number) {
-    return this.prisma.planet.findUnique({
+    return this.prisma.character.findUnique({
       where: { id }
     });
   }

@@ -15,6 +15,95 @@ type Film {
   edited: String!
 }
 
+type Planet {
+  id: Int!
+  name: String!
+  diameter: String!
+  rotationPeriod: String!
+  orbitalPeriod: String!
+  gravity: String!
+  population: String!
+  climate: String!
+  terrain: String!
+  surfaceWater: String!
+  url: String!
+  created: String!
+  edited: String!
+}
+
+type Specie {
+  id: Int!
+  name: String!
+  classification: String!
+  designation: String!
+  averageHeight: String!
+  averageLifespan: String!
+  eyeColors: String!
+  hairColors: String!
+  skinColors: String!
+  language: String!
+  homeworld: String
+  url: String!
+  created: String!
+  edited: String!
+  planetId: Int!
+}
+
+type Vehicle {
+  id: Int!
+  name: String!
+  model: String!
+  vehicleClass: String!
+  manufacturer: String!
+  length: String!
+  costInCredits: String!
+  crew: String!
+  passengers: String!
+  maxAtmospheringSpeed: String!
+  cargoCapacity: String!
+  consumables: String!
+  url: String!
+  created: String!
+  edited: String!
+}
+
+type Starship {
+  id: Int!
+  name: String!
+  model: String!
+  starshipClass: String!
+  manufacturer: String!
+  costInCredits: String!
+  length: String!
+  crew: String!
+  passengers: String!
+  maxAtmospheringSpeed: String!
+  hyperdriveRating: String!
+  mglt: String!
+  cargoCapacity: String!
+  consumables: String!
+  url: String!
+  created: String!
+  edited: String!
+}
+
+type Character {
+  id: Int!
+  name: String!
+  birthYear: String!
+  eyeColor: String!
+  gender: String!
+  hairColor: String!
+  height: String!
+  mass: String!
+  skinColor: String!
+  homeworld: String
+  url: String!
+  created: String!
+  edited: String!
+  planetId: Int!
+}
+
 type Query {
   """Get a list of films"""
   films(
@@ -30,4 +119,79 @@ type Query {
     """Film ID"""
     id: Int!
   ): Film
+
+  """Get a list of planets"""
+  planets(
+    skip: Int! = 0
+    take: Int! = 10
+
+    """Filter planets by name"""
+    name: String
+  ): [Planet!]!
+
+  """Get a planet by ID"""
+  planet(
+    """Planet ID"""
+    id: Int!
+  ): Planet
+
+  """Get a list of species"""
+  species(
+    skip: Int! = 0
+    take: Int! = 10
+
+    """Filter species by name"""
+    name: String
+  ): [Specie!]!
+
+  """Get a specie by ID"""
+  specie(
+    """Specie ID"""
+    id: Int!
+  ): Specie
+
+  """Get a list of vehicles"""
+  vehicles(
+    skip: Int! = 0
+    take: Int! = 10
+
+    """Filter vehicles by name"""
+    name: String
+  ): [Vehicle!]!
+
+  """Get a vehicle by ID"""
+  vehicle(
+    """Vehicle ID"""
+    id: Int!
+  ): Vehicle
+
+  """Get a list of starships"""
+  starships(
+    skip: Int! = 0
+    take: Int! = 10
+
+    """Filter starships by name"""
+    name: String
+  ): [Starship!]!
+
+  """Get a starship by ID"""
+  starship(
+    """Starship ID"""
+    id: Int!
+  ): Starship
+
+  """Get a list of characters"""
+  characters(
+    skip: Int! = 0
+    take: Int! = 10
+
+    """Filter characters by name"""
+    name: String
+  ): [Character!]!
+
+  """Get a character by ID"""
+  character(
+    """Character ID"""
+    id: Int!
+  ): Character
 }
