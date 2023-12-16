@@ -18,6 +18,11 @@ export class PlanetsService {
 
     return this.prisma.planet.findMany({
       where,
+      include: {
+        films: true,
+        residents: true,
+        species: true
+      },
       skip,
       take
     });
@@ -25,7 +30,12 @@ export class PlanetsService {
 
   async findOne(id: number) {
     return this.prisma.planet.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        films: true,
+        residents: true,
+        species: true
+      }
     });
   }
 }

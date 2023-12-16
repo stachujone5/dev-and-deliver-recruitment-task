@@ -19,13 +19,25 @@ export class CharactersService {
     return this.prisma.character.findMany({
       where,
       skip,
-      take
+      take,
+      include: {
+        films: true,
+        species: true,
+        starships: true,
+        vehicles: true
+      }
     });
   }
 
   async findOne(id: number) {
     return this.prisma.character.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        films: true,
+        species: true,
+        starships: true,
+        vehicles: true
+      }
     });
   }
 }

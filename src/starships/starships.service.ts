@@ -18,6 +18,10 @@ export class StarshipsService {
 
     return this.prisma.starship.findMany({
       where,
+      include: {
+        films: true,
+        pilots: true
+      },
       skip,
       take
     });
@@ -25,7 +29,11 @@ export class StarshipsService {
 
   async findOne(id: number) {
     return this.prisma.starship.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        films: true,
+        pilots: true
+      }
     });
   }
 }

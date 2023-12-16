@@ -18,6 +18,13 @@ export class FilmsService {
 
     return this.prisma.film.findMany({
       where,
+      include: {
+        species: true,
+        starships: true,
+        vehicles: true,
+        characters: true,
+        planets: true
+      },
       skip,
       take
     });
@@ -25,7 +32,14 @@ export class FilmsService {
 
   async findOne(id: number): Promise<Film | null> {
     return this.prisma.film.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        species: true,
+        starships: true,
+        vehicles: true,
+        characters: true,
+        planets: true
+      }
     });
   }
 }

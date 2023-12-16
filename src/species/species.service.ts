@@ -18,6 +18,11 @@ export class SpeciesService {
 
     return this.prisma.species.findMany({
       where,
+      include: {
+        films: true,
+        people: true,
+        homeworld: true
+      },
       skip,
       take
     });
@@ -25,7 +30,12 @@ export class SpeciesService {
 
   async findOne(id: number) {
     return this.prisma.species.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        films: true,
+        people: true,
+        homeworld: true
+      }
     });
   }
 }

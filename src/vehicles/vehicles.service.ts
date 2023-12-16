@@ -18,6 +18,10 @@ export class VehiclesService {
 
     return this.prisma.vehicle.findMany({
       where,
+      include: {
+        films: true,
+        pilots: true
+      },
       skip,
       take
     });
@@ -25,7 +29,11 @@ export class VehiclesService {
 
   async findOne(id: number) {
     return this.prisma.vehicle.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        films: true,
+        pilots: true
+      }
     });
   }
 }

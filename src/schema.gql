@@ -2,19 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Film {
-  id: Int!
-  title: String!
-  episodeId: Int!
-  openingCrawl: String!
-  director: String!
-  producer: String!
-  releaseDate: String!
-  url: String!
-  created: String!
-  edited: String!
-}
-
 type Planet {
   id: Int!
   name: String!
@@ -29,6 +16,9 @@ type Planet {
   url: String!
   created: String!
   edited: String!
+  residents: [Character]
+  films: [Film]
+  species: [Specie]
 }
 
 type Specie {
@@ -42,29 +32,13 @@ type Specie {
   hairColors: String!
   skinColors: String!
   language: String!
-  homeworld: String
   url: String!
   created: String!
   edited: String!
   planetId: Int!
-}
-
-type Vehicle {
-  id: Int!
-  name: String!
-  model: String!
-  vehicleClass: String!
-  manufacturer: String!
-  length: String!
-  costInCredits: String!
-  crew: String!
-  passengers: String!
-  maxAtmospheringSpeed: String!
-  cargoCapacity: String!
-  consumables: String!
-  url: String!
-  created: String!
-  edited: String!
+  people: [Character]
+  films: [Film]
+  homeworld: Planet
 }
 
 type Starship {
@@ -85,6 +59,28 @@ type Starship {
   url: String!
   created: String!
   edited: String!
+  films: [Film]
+  pilots: [Character]
+}
+
+type Vehicle {
+  id: Int!
+  name: String!
+  model: String!
+  vehicleClass: String!
+  manufacturer: String!
+  length: String!
+  costInCredits: String!
+  crew: String!
+  passengers: String!
+  maxAtmospheringSpeed: String!
+  cargoCapacity: String!
+  consumables: String!
+  url: String!
+  created: String!
+  edited: String!
+  films: [Film]
+  pilots: [Character]
 }
 
 type Character {
@@ -102,6 +98,28 @@ type Character {
   created: String!
   edited: String!
   planetId: Int!
+  films: [Film]
+  species: [Specie]
+  starships: [Starship]
+  vehicles: [Vehicle]
+}
+
+type Film {
+  id: Int!
+  title: String!
+  episodeId: Int!
+  openingCrawl: String!
+  director: String!
+  producer: String!
+  releaseDate: String!
+  url: String!
+  created: String!
+  edited: String!
+  species: [Specie]
+  starships: [Starship]
+  vehicles: [Vehicle]
+  characters: [Character]
+  planets: [Planet]
 }
 
 type Query {
