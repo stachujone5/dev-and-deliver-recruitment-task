@@ -97,6 +97,7 @@ type Character {
   url: String!
   created: String!
   edited: String!
+  planetName: String!
   planetId: Int!
   films: [Film]
   species: [Specie]

@@ -46,6 +46,9 @@ export class Character implements PrismaCharacter {
   @Field()
   edited: string;
 
+  @Field()
+  planetName: string;
+
   @Field(() => Int)
   planetId: number;
 

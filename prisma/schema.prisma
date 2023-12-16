@@ -97,7 +97,7 @@ model Starship {
 
 model Planet {
   id             Int         @id @default(autoincrement())
-  name           String
+  name           String      @unique
   diameter       String
   rotationPeriod String
   orbitalPeriod  String
@@ -117,22 +117,22 @@ model Planet {
 }
 
 model Character {
-  id        Int        @id @default(autoincrement())
-  name      String
-  birthYear String
-  eyeColor  String
-  gender    String
-  hairColor String
-  height    String
-  mass      String
-  skinColor String
-  homeworld Planet?    @relation(fields: [planetId], references: [id])
-  planetId  Int?
-  films     Film[]
-  species   Species[]
-  starships Starship[]
-  vehicles  Vehicle[]
-  url       String     @unique
-  created   String
-  edited    String
+  id         Int        @id @default(autoincrement())
+  name       String
+  birthYear  String
+  eyeColor   String
+  gender     String
+  hairColor  String
+  height     String
+  mass       String
+  skinColor  String
+  homeworld  Planet?    @relation(fields: [planetName], references: [name])
+  planetName String?
+  films      Film[]
+  species    Species[]
+  starships  Starship[]
+  vehicles   Vehicle[]
+  url        String     @unique
+  created    String
+  edited     String
 }
