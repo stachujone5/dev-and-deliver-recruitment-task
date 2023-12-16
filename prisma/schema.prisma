@@ -1,0 +1,89 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Film {
+  id           Int         @id @default(autoincrement())
+  title        String
+  episodeId    Int
+  openingCrawl String
+  director     String
+  producer     String
+  releaseDate  DateTime
+  characters   Character[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@map("films")
+}
+
+model Species {
+  id         Int         @id @default(autoincrement())
+  name       String
+  characters Character[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@map("species")
+}
+
+model Vehicle {
+  id         Int         @id @default(autoincrement())
+  name       String
+  model      String
+  characters Character[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@map("vehicles")
+}
+
+model Starship {
+  id         Int         @id @default(autoincrement())
+  name       String
+  model      String
+  characters Character[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@map("starships")
+}
+
+model Planet {
+  id         Int         @id @default(autoincrement())
+  name       String
+  terrain    String
+  population Int
+  characters Character[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@map("planets")
+}
+
+model Character {
+  id        Int        @id @default(autoincrement())
+  name      String
+  height    Int
+  mass      Int
+  hairColor String
+  skinColor String
+  eyeColor  String
+  birthYear String
+  gender    String
+  homeworld Planet?    @relation(fields: [planetId], references: [id])
+  planetId  Int?
+  films     Film[]
+  species   Species[]
+  vehicles  Vehicle[]
+  starships Starship[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("characters")
+}
