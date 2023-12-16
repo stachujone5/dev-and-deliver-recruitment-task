@@ -1,0 +1,33 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Film {
+  id: Int!
+  title: String!
+  episodeId: Int!
+  openingCrawl: String!
+  director: String!
+  producer: String!
+  releaseDate: String!
+  url: String!
+  created: String!
+  edited: String!
+}
+
+type Query {
+  """Get a list of films"""
+  films(
+    skip: Int! = 0
+    take: Int! = 10
+
+    """Filter films by title"""
+    title: String
+  ): [Film!]!
+
+  """Get a film by ID"""
+  film(
+    """Film ID"""
+    id: Int!
+  ): Film
+}

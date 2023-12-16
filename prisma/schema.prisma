@@ -14,54 +14,104 @@ model Film {
   openingCrawl String
   director     String
   producer     String
-  releaseDate  DateTime
+  releaseDate  String
+  species      Species[]
+  starships    Starship[]
+  vehicles     Vehicle[]
   characters   Character[]
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  planets      Planet[]
+  url          String      @unique
+  created      String
+  edited       String
 
   @@map("films")
 }
 
 model Species {
-  id         Int         @id @default(autoincrement())
-  name       String
-  characters Character[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id              Int         @id @default(autoincrement())
+  name            String
+  classification  String
+  designation     String
+  averageHeight   String
+  averageLifespan String
+  eyeColors       String
+  hairColors      String
+  skinColors      String
+  language        String
+  homeworld       Planet?     @relation(fields: [planetId], references: [id])
+  planetId        Int?
+  people          Character[]
+  films           Film[]
+  url             String      @unique
+  created         String
+  edited          String
 
   @@map("species")
 }
 
 model Vehicle {
-  id         Int         @id @default(autoincrement())
-  name       String
-  model      String
-  characters Character[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id                   Int         @id @default(autoincrement())
+  name                 String
+  model                String
+  vehicleClass         String
+  manufacturer         String
+  length               String
+  costInCredits        String
+  crew                 String
+  passengers           String
+  maxAtmospheringSpeed String
+  cargoCapacity        String
+  consumables          String
+  films                Film[]
+  pilots               Character[]
+  url                  String      @unique
+  created              String
+  edited               String
 
   @@map("vehicles")
 }
 
 model Starship {
-  id         Int         @id @default(autoincrement())
-  name       String
-  model      String
-  characters Character[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id                   Int         @id @default(autoincrement())
+  name                 String
+  model                String
+  starshipClass        String
+  manufacturer         String
+  costInCredits        String
+  length               String
+  crew                 String
+  passengers           String
+  maxAtmospheringSpeed String
+  hyperdriveRating     String
+  mglt                 String
+  cargoCapacity        String
+  consumables          String
+  films                Film[]
+  pilots               Character[]
+  url                  String      @unique
+  created              String
+  edited               String
 
   @@map("starships")
 }
 
 model Planet {
-  id         Int         @id @default(autoincrement())
-  name       String
-  terrain    String
-  population Int
-  characters Character[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id             Int         @id @default(autoincrement())
+  name           String
+  diameter       String
+  rotationPeriod String
+  orbitalPeriod  String
+  gravity        String
+  population     String
+  climate        String
+  terrain        String
+  surfaceWater   String
+  residents      Character[]
+  films          Film[]
+  url            String      @unique
+  created        String
+  edited         String
+  species        Species[]
 
   @@map("planets")
 }
@@ -69,21 +119,20 @@ model Planet {
 model Character {
   id        Int        @id @default(autoincrement())
   name      String
-  height    Int
-  mass      Int
-  hairColor String
-  skinColor String
-  eyeColor  String
   birthYear String
+  eyeColor  String
   gender    String
+  hairColor String
+  height    String
+  mass      String
+  skinColor String
   homeworld Planet?    @relation(fields: [planetId], references: [id])
   planetId  Int?
   films     Film[]
   species   Species[]
-  vehicles  Vehicle[]
   starships Starship[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-
-  @@map("characters")
+  vehicles  Vehicle[]
+  url       String     @unique
+  created   String
+  edited    String
 }
