@@ -80,7 +80,11 @@ pnpm install
 
 ```bash
 DATABASE_URL=postgresql://prisma:prisma@postgres-container:5432/mydb
-into
+```
+
+Into
+
+```bash
 DATABASE_URL=postgresql://prisma:prisma@localhost:5432/mydb
 ```
 
