@@ -1,8 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Species as PrismaSpecie } from '@prisma/client';
-import { Character } from 'src/characters/entities/character.entity';
-import { Film } from 'src/films/entities/film.entity';
-import { Planet } from 'src/planets/entities/planet.entity';
 
 @ObjectType()
 export class Specie implements PrismaSpecie {
@@ -47,13 +44,4 @@ export class Specie implements PrismaSpecie {
 
   @Field(() => Int)
   planetId: number;
-
-  @Field(() => [Character], { nullable: 'itemsAndList' })
-  people: Character[];
-
-  @Field(() => [Film], { nullable: 'itemsAndList' })
-  films: Film[];
-
-  @Field(() => Planet, { nullable: true })
-  homeworld?: Planet;
 }

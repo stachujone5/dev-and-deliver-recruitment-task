@@ -1,25 +1,15 @@
-FROM node:18-alpine AS base
-
-RUN npm i -g pnpm
-
-FROM base AS dependencies
+FROM node:18
 
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
+
+COPY . .
+
+RUN npm install -g pnpm
+
 RUN pnpm install
 
-FROM base AS build
-
-WORKDIR /app
-COPY . .
-COPY --from=dependencies /app/node_modules ./node_modules
 RUN pnpm build
-RUN pnpm prune --prod
 
-FROM base AS deploy
+EXPOSE 3000
 
-WORKDIR /app
-COPY --from=build /app/dist/ ./dist/
-COPY --from=build /app/node_modules ./node_modules
-
-CMD [ "node", "dist/main.js" ]
+CMD ["pnpm", "start:migrate:dev"]

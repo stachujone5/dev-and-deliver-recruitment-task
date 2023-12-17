@@ -1,7 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Vehicle as PrismaVehicle } from '@prisma/client';
-import { Character } from 'src/characters/entities/character.entity';
-import { Film } from 'src/films/entities/film.entity';
 
 @ObjectType()
 export class Vehicle implements PrismaVehicle {
@@ -49,10 +47,4 @@ export class Vehicle implements PrismaVehicle {
 
   @Field()
   edited: string;
-
-  @Field(() => [Film], { nullable: 'itemsAndList' })
-  films: Film[];
-
-  @Field(() => [Character], { nullable: 'itemsAndList' })
-  pilots: Character[];
 }

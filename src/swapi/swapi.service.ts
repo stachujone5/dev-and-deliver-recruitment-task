@@ -10,15 +10,16 @@ import {
   starshipSchema,
   vehicleSchema
 } from './swapi.schema';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 const BASE_URL = 'https://swapi.dev/api/';
 
 @Injectable()
 export class SwapiService {
   constructor(private prisma: PrismaService) {}
+  private isFirstRun = false;
 
-  async fetchResource<T extends ZodSchema>(url: string, schema: T) {
+  private async fetchResource<T extends ZodSchema>(url: string, schema: T) {
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -30,7 +31,7 @@ export class SwapiService {
     return schema.parse(data) as z.infer<T>;
   }
 
-  async fetchFilms() {
+  private async fetchFilms() {
     const filmsResponse = await this.fetchResource(
       `${BASE_URL}films/`,
       z.object({ results: z.array(filmSchema), next: z.string().url().nullable() })
@@ -46,22 +47,7 @@ export class SwapiService {
         producer: filmData.producer,
         releaseDate: filmData.release_date,
         title: filmData.title,
-        url: filmData.url,
-        characters: {
-          connect: filmData.characters.map((url) => ({ url }))
-        },
-        planets: {
-          connect: filmData.planets.map((url) => ({ url }))
-        },
-        species: {
-          connect: filmData.species.map((url) => ({ url }))
-        },
-        starships: {
-          connect: filmData.starships.map((url) => ({ url }))
-        },
-        vehicles: {
-          connect: filmData.vehicles.map((url) => ({ url }))
-        }
+        url: filmData.url
       };
 
       await this.prisma.film.upsert({
@@ -72,7 +58,7 @@ export class SwapiService {
     }
   }
 
-  async fetchStarships() {
+  private async fetchStarships() {
     let nextUrl: string | null = `${BASE_URL}starships/`;
 
     while (nextUrl) {
@@ -98,13 +84,7 @@ export class SwapiService {
           name: starshipData.name,
           passengers: starshipData.passengers,
           starshipClass: starshipData.starship_class,
-          url: starshipData.url,
-          films: {
-            connect: starshipData.films.map((url) => ({ url }))
-          },
-          pilots: {
-            connect: starshipData.pilots.map((url) => ({ url }))
-          }
+          url: starshipData.url
         };
         await this.prisma.starship.upsert({
           where: { url: starshipData.url },
@@ -117,7 +97,7 @@ export class SwapiService {
     }
   }
 
-  async fetchSpecies() {
+  private async fetchSpecies() {
     let nextUrl: string | null = `${BASE_URL}species/`;
 
     while (nextUrl) {
@@ -139,13 +119,7 @@ export class SwapiService {
           language: speciesData.language,
           name: speciesData.name,
           skinColors: speciesData.skin_colors,
-          url: speciesData.url,
-          films: {
-            connect: speciesData.films.map((url) => ({ url }))
-          },
-          people: {
-            connect: speciesData.people.map((url) => ({ url }))
-          }
+          url: speciesData.url
         };
 
         await this.prisma.species.upsert({
@@ -158,7 +132,7 @@ export class SwapiService {
     }
   }
 
-  async fetchVehicles() {
+  private async fetchVehicles() {
     let nextUrl: string | null = `${BASE_URL}vehicles/`;
 
     while (nextUrl) {
@@ -182,13 +156,7 @@ export class SwapiService {
           name: vehicleData.name,
           passengers: vehicleData.passengers,
           url: vehicleData.url,
-          vehicleClass: vehicleData.vehicle_class,
-          films: {
-            connect: vehicleData.films.map((url) => ({ url }))
-          },
-          pilots: {
-            connect: vehicleData.pilots.map((url) => ({ url }))
-          }
+          vehicleClass: vehicleData.vehicle_class
         };
         await this.prisma.vehicle.upsert({
           where: { url: vehicleData.url },
@@ -201,7 +169,7 @@ export class SwapiService {
     }
   }
 
-  async fetchPeople() {
+  private async fetchPeople() {
     let nextUrl: string | null = `${BASE_URL}people/`;
 
     while (nextUrl) {
@@ -222,22 +190,7 @@ export class SwapiService {
           mass: peopleData.mass,
           name: peopleData.name,
           skinColor: peopleData.skin_color,
-          url: peopleData.url,
-          films: {
-            connect: peopleData.films.map((url) => ({ url }))
-          },
-          species: {
-            connect: peopleData.species.map((url) => ({ url }))
-          },
-          starships: {
-            connect: peopleData.starships.map((url) => ({ url }))
-          },
-          vehicles: {
-            connect: peopleData.vehicles.map((url) => ({ url }))
-          },
-          homeworld: peopleData.homeworld && {
-            connect: { url: peopleData.homeworld }
-          }
+          url: peopleData.url
         };
 
         await this.prisma.character.upsert({
@@ -251,7 +204,7 @@ export class SwapiService {
     }
   }
 
-  async fetchPlanets() {
+  private async fetchPlanets() {
     let nextUrl: string | null = `${BASE_URL}planets/`;
 
     while (nextUrl) {
@@ -273,13 +226,7 @@ export class SwapiService {
           rotationPeriod: planetData.rotation_period,
           surfaceWater: planetData.surface_water,
           terrain: planetData.terrain,
-          url: planetData.url,
-          films: {
-            connect: planetData.films.map((url) => ({ url }))
-          },
-          residents: {
-            connect: planetData.residents.map((url) => ({ url }))
-          }
+          url: planetData.url
         };
         await this.prisma.planet.upsert({
           where: { url: planetData.url },
@@ -294,6 +241,13 @@ export class SwapiService {
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async handleCron() {
     await this.getData();
+  }
+
+  async onApplicationBootstrap() {
+    if (this.isFirstRun) {
+      await this.getData();
+      this.isFirstRun = false;
+    }
   }
 
   async getData() {

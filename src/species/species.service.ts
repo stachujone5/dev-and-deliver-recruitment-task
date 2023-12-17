@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class SpeciesService {
@@ -18,11 +18,6 @@ export class SpeciesService {
 
     return this.prisma.species.findMany({
       where,
-      include: {
-        films: true,
-        people: true,
-        homeworld: true
-      },
       skip,
       take
     });
@@ -30,12 +25,7 @@ export class SpeciesService {
 
   async findOne(id: number) {
     return this.prisma.species.findUnique({
-      where: { id },
-      include: {
-        films: true,
-        people: true,
-        homeworld: true
-      }
+      where: { id }
     });
   }
 }

@@ -10,6 +10,7 @@ import { SpeciesModule } from './species/species.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
 import { StarshipsModule } from './starships/starships.module';
 import { CharactersModule } from './characters/characters.module';
+import { FilmAnalysisModule } from './film-analysis/film-analysis.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { CharactersModule } from './characters/characters.module';
     SpeciesModule,
     VehiclesModule,
     StarshipsModule,
-    CharactersModule
+    CharactersModule,
+    FilmAnalysisModule
   ]
 })
 export class AppModule {}
