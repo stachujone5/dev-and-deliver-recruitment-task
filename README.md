@@ -102,6 +102,11 @@ Run the tests:
 pnpm test
 ```
 
+## Things to improve
+
+Swapi resources should be connected with each other - there are existing relations in the db but resources aren't connected in any way.
+For example, a person should have a homeworld, a species, a starships, etc. The same applies to other resources.
+
 ## Technologies
 
 - NestJS
