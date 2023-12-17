@@ -40,9 +40,9 @@ cp .env.example .env
 docker-compose up
 ```
 
-3. Access the applications:
+6. Access the graphql playground at the following URL (The first time you run the app, it will take a a minute or so to start up - we need to fill the database with swapi data):
 
-NestJS: http://localhost:3000
+http://localhost:3000/graphql
 
 ### Running the app locally
 
@@ -76,19 +76,27 @@ docker-compose up --build -d db
 pnpm install
 ```
 
-6. Push the database schema to the development database:
+6. Change the database host in the `.env` file to `localhost` (instead of `postgres-container`):
+
+```bash
+DATABASE_URL=postgresql://prisma:prisma@postgres-container:5432/mydb
+into
+DATABASE_URL=postgresql://prisma:prisma@localhost:5432/mydb
+```
+
+7. Push the database schema to the development database:
 
 ```bash
 pnpm prisma db push
 ```
 
-7. Run the backend server on http://localhost:3000 in development mode:
+8. Run the graphql playground on http://localhost:3000/graphql in development mode (the first time you run the app, it will take a a minute or so to start up - we need to fill the database with swapi data):
 
 ```bash
 pnpm start:dev
 ```
 
-To run the backend tests manually:
+Run the tests:
 
 ```bash
 pnpm test
