@@ -6,7 +6,8 @@ services:
     ports:
       - '3000:3000'
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     env_file:
       - .env
   db:

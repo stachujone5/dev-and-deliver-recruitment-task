@@ -17,7 +17,7 @@ const BASE_URL = 'https://swapi.dev/api/';
 @Injectable()
 export class SwapiService {
   constructor(private prisma: PrismaService) {}
-  private isFirstRun = false;
+  private isFirstRun = true;
 
   private async fetchResource<T extends ZodSchema>(url: string, schema: T) {
     const response = await fetch(url);
